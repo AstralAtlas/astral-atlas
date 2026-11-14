@@ -1,4 +1,4 @@
-/* Language menu. The site is written in English; visitors can switch it to 31 other languages.
+/* Language menu. The site is written in English; visitors can switch it to 29 other languages.
  * Our own <select> lists the languages in the site's current language (English by default; Google
  * translates the option names along with the page). Picking one stores Google's `googtrans` cookie
  * and reloads; the hidden Google Translate widget then machine-translates the page in the browser.
@@ -7,8 +7,7 @@
 (function () {
   'use strict';
   var LANGS = [
-    ['en', 'English'], ['ar', 'Arabic'], ['bn', 'Bengali'], ['zh-CN', 'Chinese (Simplified)'],
-    ['zh-TW', 'Chinese (Traditional)'], ['cs', 'Czech'], ['nl', 'Dutch'], ['tl', 'Filipino'],
+    ['en', 'English'], ['ar', 'Arabic'], ['bn', 'Bengali'], ['cs', 'Czech'], ['nl', 'Dutch'], ['tl', 'Filipino'],
     ['fr', 'French'], ['de', 'German'], ['el', 'Greek'], ['iw', 'Hebrew'], ['hi', 'Hindi'],
     ['id', 'Indonesian'], ['it', 'Italian'], ['ja', 'Japanese'], ['ko', 'Korean'], ['ms', 'Malay'],
     ['fa', 'Persian'], ['pl', 'Polish'], ['pt', 'Portuguese'], ['ro', 'Romanian'], ['ru', 'Russian'],
@@ -19,7 +18,9 @@
   function current() {
     var m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^/]*\/([^;]+)/);
     var code = m ? decodeURIComponent(m[1]) : 'en';
-    return LANGS.some(function (l) { return l[0] === code; }) ? code : 'en';
+    if (LANGS.some(function (l) { return l[0] === code; })) return code;
+    if (m) setCookie('', 'Thu, 01 Jan 1970 00:00:00 GMT'); // a language no longer offered: back to English
+    return 'en';
   }
 
   function setCookie(value, expires) {
