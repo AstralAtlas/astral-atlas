@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Astral Atlas | Jezero Marswalk Planner</title>
+  <meta name="description" content="Astral Atlas layers NASA imagery, terrain, thermal and rover data to predict unexplored science targets in Jezero Crater and route a Mars crew to them safely.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/jezero-hero.jpg" as="image">
+  <link rel="stylesheet" href="css/atlas.css">
+  <link rel="stylesheet" href="css/designer.css">
+</head>
+<body class="designer">
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Astral Atlas home">
+      <img class="brand-mark" src="assets/favicon.svg" alt="">
+      <span class="brand-name">ASTRAL <span>ATLAS</span></span>
+    </a>
+    <nav aria-label="Page sections">
+      <a href="#data">Data layers</a>
+      <a href="#method">How it predicts</a>
+      <a href="#about">Project</a>
+    </nav>
+  </header>
+
+  <main class="column">
+    <section class="intro">
+      <p class="eyebrow">Jezero Crater, Mars &middot; 18.44&deg;N 77.45&deg;E</p>
+      <h1>Plan a safe Marswalk through Jezero Crater.</h1>
+      <p class="lead">Astral Atlas layers NASA imagery, terrain, thermal and rover data to predict where the unexplored science is, then routes a crew there around the hazards.</p>
+      <div class="live-strip" id="liveStrip" aria-live="polite">
+        <span class="chip"><span class="live-dot" id="clockDot"></span>Jezero now <b id="liveClock">--:--</b></span>
+        <span class="chip" id="liveSun">Sun <b>--</b></span>
+        <span class="chip" id="liveRover">Perseverance <b>locating</b></span>
+        <span class="chip" id="liveStorm">Space weather <b>checking</b></span>
+      </div>
+    </section>
+
+    <form class="designer-card glass" id="designer" autocomplete="off">
+      <div class="designer-head">
+        <div>
+          <h2>Mission designer</h2>
+          <p>Make four choices. The map on the next screen is built from them.</p>
+        </div>
+        <ol class="steps" id="steps" aria-label="Progress">
+          <li class="done"><span>Objective</span></li>
+          <li class="done"><span>Start</span></li>
+          <li class="done"><span>Crew</span></li>
+          <li class="done"><span>Layers</span></li>
+        </ol>
+      </div>
+
+      <fieldset class="block">
+        <legend>
+          <div class="block-head">
+            <span class="block-icon" id="icObjective"></span>
+            <div><h3>Science objective</h3><p>What should the map look for in ground no rover has reached?</p></div>
+          </div>
+        </legend>
+        <div class="options" id="objectiveOptions"></div>
+      </fieldset>
+
+      <fieldset class="block">
+        <legend>
+          <div class="block-head">
+            <span class="block-icon" id="icStart"></span>
+            <div><h3>Start point</h3><p>Where the crew steps out. Pick a site, or click the image to drop your own.</p></div>
+          </div>
+        </legend>
+        <div class="start-layout">
+          <div class="locator" id="locator" role="application" aria-label="Jezero study area. Click to set a custom start point.">
+            <img src="assets/jezero-locator.jpg" alt="MRO Context Camera view of western Jezero Crater showing the river delta, crater floor and rim" draggable="false">
+            <svg class="track-svg" id="locatorTrack" viewBox="0 0 1000 947.5" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <div id="locatorPins"></div>
+            <div class="locator-cap">MRO CTX mosaic, 32 km across. White line: Perseverance&rsquo;s track.</div>
+          </div>
+          <div class="start-list" id="startOptions"></div>
+        </div>
+      </fieldset>
+
+      <fieldset class="block">
+        <legend>
+          <div class="block-head">
+            <span class="block-icon" id="icCrew"></span>
+            <div><h3>Crew and limits</h3><p>How the crew moves and when it must be back. These are planning inputs you control.</p></div>
+          </div>
+        </legend>
+        <div class="crew-layout">
+          <div>
+            <div class="options" id="modeOptions" style="grid-template-columns:minmax(0,1fr)"></div>
+            <p class="field-label" style="margin-top:18px">Sky today (dust opacity, &tau;)</p>
+            <div class="seg" id="tauOptions"></div>
+            <p class="note">Dust opacity sets how much sunlight reaches the ground. No public live feed reports it for Jezero, so the crew sets it from the sky they see.</p>
+          </div>
+          <div class="sliders">
+            <div class="slider">
+              <label for="maxSlope">Steepest slope allowed <output id="maxSlopeOut" for="maxSlope"></output></label>
+              <input type="range" id="maxSlope" min="8" max="28" step="1">
+              <small>Routes never cross steeper ground. Perseverance met slopes up to 23&deg; climbing the rim.</small>
+            </div>
+            <div class="slider">
+              <label for="evaHours">Longest time outside <output id="evaHoursOut" for="evaHours"></output></label>
+              <input type="range" id="evaHours" min="2" max="8" step="0.5">
+              <small>Out, science stop and back must fit inside this, with daylight to spare.</small>
+            </div>
+            <div class="slider">
+              <label for="siteMinutes">Time at the science site <output id="siteMinutesOut" for="siteMinutes"></output></label>
+              <input type="range" id="siteMinutes" min="15" max="180" step="15">
+              <small>Sampling, imaging and notes at the target.</small>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="block">
+        <legend>
+          <div class="block-head">
+            <span class="block-icon" id="icLayers"></span>
+            <div><h3>Map layers</h3><p>What to draw over the imagery. You can switch any of these on the map too.</p></div>
+          </div>
+        </legend>
+        <div class="layer-groups" id="layerGroups"></div>
+      </fieldset>
+
+      <div class="designer-foot">
+        <p class="plan-summary" id="planSummary"></p>
+        <button class="btn btn-primary btn-lg" type="submit" id="generate">Generate mission map <span id="icGo"></span></button>
+      </div>
+    </form>
+
+    <section class="info" id="data">
+      <h2>Six kinds of NASA data, one map</h2>
+      <p class="sub">Every layer comes from a public NASA or USGS product. Nothing on the map is drawn by hand or made up.</p>
+      <div class="panel data-rows">
+        <div class="data-row"><span class="data-kind">Optical</span><p><b>The ground itself, down to 25 cm.</b> Zoom from the whole crater to single boulders and dune ripples.</p><span class="src">MRO HiRISE 25 cm, MRO CTX 6 m, Viking colour 232 m, served live by NASA Mars Trek</span></div>
+        <div class="data-row"><span class="data-kind">Topographic</span><p><b>Elevation, slope and roughness.</b> Checked against <span id="demN">708</span> Perseverance positions: the heights agree within <span id="demErr">0.8</span> m on average.</p><span class="src">MRO CTX stereo elevation model, 20 m, USGS Astrogeology</span></div>
+        <div class="data-row"><span class="data-kind">Thermal</span><p><b>Loose sand versus bedrock.</b> Ground that is coldest at night holds little heat, which marks sand and dust.</p><span class="src">Mars Odyssey THEMIS night and day infrared, 100 m</span></div>
+        <div class="data-row"><span class="data-kind">Ground truth</span><p><b>What the rover has actually tested.</b> <span id="roverKm">45</span> km of track and 30 sample tubes label the terrain for the predictor.</p><span class="src">Mars 2020 traverse and waypoints, NASA sample catalogue</span></div>
+        <div class="data-row"><span class="data-kind">Atmospheric</span><p><b>Local time, daylight, sunlight and weather.</b> Sun position from NASA&rsquo;s Mars clock, sunlight from Beer&rsquo;s law, air temperature and pressure from the rover&rsquo;s weather station.</p><span class="src">NASA GISS Mars24, NASA TM-102299, MEDA</span></div>
+        <div class="data-row"><span class="data-kind">Radiation</span><p><b>Solar storms headed for Mars.</b> NASA&rsquo;s storm simulations flag predicted arrivals, and each EVA gets a dose estimate.</p><span class="src">NASA CCMC DONKI (WSA-ENLIL), Curiosity RAD</span></div>
+      </div>
+    </section>
+
+    <section class="info" id="method">
+      <h2>How it predicts the unexplored</h2>
+      <p class="sub">The predictor is our team&rsquo;s nearest-neighbour model, ported from Python and fed with real measurements instead of test data.</p>
+      <div class="panel">
+        <ol class="method">
+          <li><h3>Learn from the rover</h3><p>Each place Perseverance stopped is labelled with the geologic setting of that mission campaign: crater floor, delta, margin carbonates, inlet channel or rim.</p></li>
+          <li><h3>Compare from orbit</h3><p>For every 80 m cell of Jezero, six NASA measurements are compared with the rover-verified cells. The three closest matches vote, weighted by similarity.</p></li>
+          <li><h3>Test it blind</h3><p>Every known point is hidden together with all references within 1 km, then predicted from the rest. The map shows that score for your objective.</p></li>
+          <li><h3>Route around hazards</h3><p>A least-cost search finds the shortest passable route and the lowest-risk one, penalising slope, rough ground and loose sand.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="info" id="about">
+      <h2>The project</h2>
+      <div class="panel about">
+        <div>
+          <p><b>Astral Atlas</b> answers one question: how can existing NASA data predict unknown geological and mineral features in Jezero Crater, and become a map for the astronauts who go there?</p>
+          <p>A crew picks a science goal and a starting point. The atlas ranks unvisited ground by how closely it matches places where Perseverance confirmed that kind of rock, checks which candidates can be reached inside the EVA limits, and compares a shortest route with a lowest-risk route. A live panel tracks local time, sunlight, the rover and solar storms, and turns them into a go or no-go.</p>
+          <p class="muted" style="font-size:13px">Built by Team Astral Atlas for the NASA Space Apps Challenge. A planning aid and proof of concept, not flight software. Scores are relative evidence, not probabilities.</p>
+        </div>
+        <div>
+          <h3>Sources</h3>
+          <ul class="sources" id="sourceList"></ul>
+        </div>
+      </div>
+      <div class="foot">
+        <span>Imagery and data: NASA, JPL-Caltech, USGS, ASU, University of Arizona, MSSS.</span>
+        <span>Map library: Leaflet. Fonts: Archivo, Inter, IBM Plex Mono.</span>
+      </div>
+    </section>
+  </main>
+
+  <div class="launch" id="launch" hidden>
+    <div class="launch-box">
+      <div class="spinner"></div>
+      <h2>Generating mission map</h2>
+      <p id="launchText">Loading NASA terrain for Jezero</p>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/data/rover.js"></script>
+  <script src="js/data/conditions.js"></script>
+  <script src="js/atlas-data.js"></script>
+  <script src="js/mars-time.js"></script>
+  <script src="js/live.js"></script>
+  <script src="js/ui-kit.js"></script>
+  <script src="js/designer.js"></script>
+</body>
+</html>

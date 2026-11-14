@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Astral Atlas | Jezero Mission Map</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/atlas.css">
+  <link rel="stylesheet" href="css/map.css">
+</head>
+<body class="mapapp">
+  <div id="map" aria-label="Map of Jezero Crater"></div>
+  <div class="grat" id="grat" aria-hidden="true"></div>
+
+  <header class="hud hud-top">
+    <div class="bar">
+      <a class="brand" href="index.html" aria-label="Astral Atlas home">
+        <img class="brand-mark" src="assets/favicon.svg" alt="">
+        <span class="brand-name">ASTRAL <span>ATLAS</span></span>
+      </a>
+      <span class="sep"></span>
+      <a class="bar-link" id="backLink" href="index.html"><span id="icBack"></span><span>Mission designer</span></a>
+    </div>
+    <div class="spacer"></div>
+    <button class="bar cond-bar" id="condBar" aria-expanded="false" aria-controls="condCard" title="Open Jezero conditions">
+      <span class="cond"><span class="live-dot" id="cDot"></span><b id="cSol">Sol</b><small id="cClock"></small></span>
+      <span class="cond hide-sm" id="cSunWrap"><b id="cSun"></b><small id="cIrr"></small></span>
+      <span class="cond hide-md" id="cTempWrap"><b id="cTemp"></b><small id="cTempNote"></small></span>
+      <span class="cond" id="cStormWrap"><span class="status s-muted" id="cStorm"><span class="dot"></span>Space weather</span></span>
+      <span id="icCond"></span>
+    </button>
+    <div class="spacer"></div>
+    <button class="bar go s-muted" id="goBadge" title="Open safety checks">
+      <span class="go-light"></span><b id="goWord">CHECKING</b><small id="goWhy"></small>
+    </button>
+  </header>
+
+  <section class="card cond-card" id="condCard" hidden aria-label="Jezero conditions">
+    <div class="card-head"><h2>Jezero conditions</h2><button class="icon-btn" id="condClose" aria-label="Close conditions"></button></div>
+    <div class="card-body" id="condBody"></div>
+  </section>
+
+  <aside class="card dock" id="dock" aria-label="Map layers">
+    <div class="card-head"><h2>Layers</h2><button class="icon-btn" id="dockToggle" aria-label="Collapse layers"></button></div>
+    <div class="card-body" id="dockBody"></div>
+  </aside>
+
+  <aside class="card plan" id="plan" aria-label="Mission plan">
+    <div class="card-head"><h2>Mission plan</h2><button class="icon-btn" id="planToggle" aria-label="Collapse mission plan"></button></div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tabTargets" aria-selected="true" data-tab="targets">Targets <span class="count" id="nTargets">0</span></button>
+      <button class="tab" role="tab" id="tabRoute" aria-selected="false" data-tab="route">Route</button>
+      <button class="tab" role="tab" id="tabSafety" aria-selected="false" data-tab="safety">Safety</button>
+    </div>
+    <div class="card-body" id="planBody"></div>
+  </aside>
+
+  <div class="zoomer">
+    <button id="zIn" aria-label="Zoom in"></button>
+    <button id="zOut" aria-label="Zoom out"></button>
+    <button id="zHome" aria-label="Show whole plan" title="Show whole plan"></button>
+    <button id="zRover" aria-label="Go to Perseverance" title="Go to Perseverance"></button>
+  </div>
+  <div class="readout" id="readout"><span id="roPos">Move over the map</span><span class="scale"><i id="scaleBar"></i><b id="scaleText"></b></span></div>
+  <div class="res-note" id="resNote"></div>
+  <div class="credit">Imagery: NASA / JPL-Caltech / USGS / ASU / UArizona via Mars Trek</div>
+
+  <div class="loader" id="loader">
+    <div class="loader-box">
+      <h2>Building your mission map</h2>
+      <p id="loaderSub">Real NASA data for Jezero Crater</p>
+      <ul class="loader-steps" id="loaderSteps"></ul>
+    </div>
+  </div>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/data/terrain.js"></script>
+  <script src="js/data/rover.js"></script>
+  <script src="js/data/conditions.js"></script>
+  <script src="js/atlas-data.js"></script>
+  <script src="js/mars-time.js"></script>
+  <script src="js/terrain.js"></script>
+  <script src="js/predictor.js"></script>
+  <script src="js/contour.js"></script>
+  <script src="js/live.js"></script>
+  <script src="js/ui-kit.js"></script>
+  <script src="js/map-app.js"></script>
+</body>
+</html>
