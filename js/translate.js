@@ -23,6 +23,9 @@
     s.src = 'https://translate.google.com/translate_a/element.js?cb=atlasTranslateInit';
     s.async = true;
     document.head.appendChild(s);
+    // Google shifts the page down for its banner; keep the layout (and the fixed map HUD) in place.
+    var pin = function () { if (document.body.style.top && document.body.style.top !== '0px') document.body.style.setProperty('top', '0px', 'important'); };
+    new MutationObserver(pin).observe(document.body, { attributes: true, attributeFilter: ['style'] });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();
 })();

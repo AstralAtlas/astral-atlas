@@ -134,5 +134,5 @@ svg.ic { width: 1em; height: 1em; flex: none; stroke: currentColor; fill: none; 
 .lang-menu .goog-te-gadget-icon { display: none; }
 .lang-menu .goog-te-gadget-simple .VIpgJd-ZVi9od-xl07Ob-lTBxed img { display: none; }
 /* Keep Google's top banner from pushing the page (and the fixed map HUD) down */
-iframe.skiptranslate, .goog-te-banner-frame, #goog-gt-tt, .VIpgJd-ZVi9od-ORHb-OEVmcd { display: none !important; }
+iframe.skiptranslate, .goog-te-banner-frame, #goog-gt-tt, .VIpgJd-ZVi9od-ORHb-OEVmcd, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf, body > .skiptranslate { display: none !important; }
 body { top: 0 !important; }
