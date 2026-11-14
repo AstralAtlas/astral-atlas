@@ -127,12 +127,13 @@ svg.ic { width: 1em; height: 1em; flex: none; stroke: currentColor; fill: none; 
 .viz-tip-row span:last-child { color: var(--dust-400); }
 .viz-key { width: 10px; height: 2px; border-radius: 1px; flex: none; }
 
-/* Language menu (Google Translate widget) */
-.lang-menu { display: inline-flex; align-items: center; margin-left: 14px; font-size: 13px; }
-.lang-menu .goog-te-gadget-simple { background: transparent !important; border: 1px solid var(--line-strong) !important; border-radius: 8px; padding: 4px 8px !important; font-size: 13px !important; line-height: 1.2; white-space: nowrap; }
-.lang-menu .goog-te-gadget-simple a, .lang-menu .goog-te-gadget-simple span { color: var(--dust-200) !important; border: 0 !important; text-decoration: none !important; }
-.lang-menu .goog-te-gadget-icon { display: none; }
-.lang-menu .goog-te-gadget-simple .VIpgJd-ZVi9od-xl07Ob-lTBxed img { display: none; }
-/* Keep Google's top banner from pushing the page (and the fixed map HUD) down */
-.goog-te-banner-frame, #goog-gt-tt, iframe.VIpgJd-ZVi9od-ORHb-OEVmcd, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf { display: none !important; }
+/* Language menu */
+.lang-menu { display: inline-flex; align-items: center; margin-left: 14px; }
+.lang-menu select { appearance: none; -webkit-appearance: none; font: inherit; font-size: 13px; color: var(--dust-200); background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23d9cdbb' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 9px center; border: 1px solid var(--line-strong); border-radius: 8px; padding: 5px 26px 5px 10px; cursor: pointer; max-width: 190px; }
+.lang-menu select:hover { color: var(--dust-50); }
+.lang-menu select:focus-visible { outline: 2px solid var(--ochre); outline-offset: 2px; }
+.lang-menu option { color: #1a1410; background: #f4efe8; }
+.lang-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* Hide Google's banner and tooltips; keep the page from being pushed down */
+.goog-te-banner-frame, #goog-gt-tt, iframe.VIpgJd-ZVi9od-ORHb-OEVmcd, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf, .VIpgJd-yAWNEb-L7lbkb { display: none !important; }
 body { top: 0 !important; }
